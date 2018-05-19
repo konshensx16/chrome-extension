@@ -1,0 +1,25 @@
+This extension is going to help launch a filezilla instance and get you connected right away.
+
+I have the extension ready and loaded.
+
+PROBLEMS: 
+- Extensions are JS and therefor sandbox and can't get access to user computer, two solutions available
+    - Using NPAPI, highly disadvised by google.
+    - Using native messaging interface (using this one)
+
+For the native messaging to work i need to have a manifest in the host, i'm using the linux os so here's what needs to be done:
+Linux (system-wide)
+Google Chrome: /etc/opt/chrome/native-messaging-hosts/com.my_company.my_application.json
+Chromium: /etc/chromium/native-messaging-hosts/com.my_company.my_application.json
+Linux (user-specific, default path)
+Google Chrome: ~/.config/google-chrome/NativeMessagingHosts/com.my_company.my_application.json
+Chromium: ~/.config/chromium/NativeMessagingHosts/com.my_company.my_application.json
+
+- So i spent almost 5 hours trying to figure out whats hapepening and i couldn't, the on disconnect function was firing immidiately without an error message 
+so to fix this i changed the data callback to chrome.runtime.lastError.message which told me that the specified native app host could not be found
+
+Allright after a long fight i couldn't get my manifest_host.json file to work so i ended up using the one installed by the example
+And i found out in order to interact with the DOM of the current active tab i had to use content_scripts instead of backround
+
+Holyshit check this out, 
+so i can't have 
